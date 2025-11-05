@@ -12,5 +12,7 @@ namespace InventorySystemAPI.Data
 
         // 商品資料表
         public DbSet<Product> Products { get; set; }
+        // 庫存記錄資料表
+        public DbSet<Inventory> Inventories { get; set; }
     }
 }
