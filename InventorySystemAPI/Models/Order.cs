@@ -1,32 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace InventorySystemAPI.Models
 {
     public class Order
     {
-        // 訂單編號(主鍵)
         public int Id { get; set; }
 
-        // 客戶姓名
-        public string CustomerName { get; set; } = string.Empty;
+        [Required(AllowEmptyStrings = false, ErrorMessage = "客戶姓名為必填")]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = "客戶姓名長度必須在 1-50 字之間")]
+        public string CustomerName { get; set; } = null!;
 
-        // 客戶電話
-        public string? CustomerPhone { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "客戶電話為必填")]
+        [Phone(ErrorMessage = "電話格式不正確")]
+        [StringLength(20, MinimumLength = 1, ErrorMessage = "電話號碼長度必須在 1-20 字之間")]
+        public string CustomerPhone { get; set; } = null!;
 
-        // 訂單狀態：Pending(待處理), Completed(已完成), Cancelled(已取消)
         public string Status { get; set; } = "Pending";
 
-        // 訂單總金額
         public decimal TotalAmount { get; set; }
 
-        // 備註
+        [StringLength(500, ErrorMessage = "備註不能超過 500 字")]
         public string? Remarks { get; set; }
 
-        // 訂單日期
-        public DateTime OrderDate { get; set; } = DateTime.Now;
+        public DateTime OrderDate { get; set; }
 
-        // 導航屬性：訂單明細列表
-        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        public List<OrderItem> OrderItems { get; set; } = new();
     }
 }

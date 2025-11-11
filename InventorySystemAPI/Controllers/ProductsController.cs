@@ -44,6 +44,11 @@ namespace InventorySystemAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
+            // ⭐ 加入這段驗證檢查
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 

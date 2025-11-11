@@ -1,25 +1,26 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace InventorySystemAPI.Models
 {
     public class Inventory
     {
-        //庫存記錄編號 (主鍵)
         public int Id { get; set; }
-        //商品編號(外鍵)
+
+        [Required(ErrorMessage = "商品 ID 為必填")]
         public int ProductId { get; set; }
-        // 類型：進貨(In) 或 出貨(Out)
-        public string Type { get; set; } = string.Empty;
-        // 數量(正數表示增加，負數表示減少)
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "類型為必填")]
+        [RegularExpression("^(In|Out)$", ErrorMessage = "類型只能是 In 或 Out")]
+        public string Type { get; set; } = null!;
+
+        [Required(ErrorMessage = "數量為必填")]
         public int Quantity { get; set; }
 
-        // 備註
+        [StringLength(500, ErrorMessage = "備註不能超過 500 字")]
         public string? Remarks { get; set; }
 
-        // 操作時間
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
 
-        // 導航屬性：關聯到商品
         public Product? Product { get; set; }
     }
 }
